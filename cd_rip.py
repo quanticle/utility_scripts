@@ -6,11 +6,14 @@ import mutagen.flac
 import mutagen.id3
 import mutagen.mp3
 import glob
-def rip_to_wav():
+def rip_to_wav(speed=None):
     """Uses subprocess to run CDParanoia to rip the given CD to wav files in the
     current directory"""
     
-    subprocess.check_call(['cdparanoia', '-B', '-S', '4'])
+    if speed == None:
+        subprocess.check_call(['cdparanoia', '-B'])
+    else:
+        subprocess.check_call(['cdparanoia', '-B', '-S', str(rip_speed)])
 
 def rip_to_flac(input_file_name, output_file_name):
     """Uses subprocess to call FLAC to convert the input file (presumably a wav
@@ -49,8 +52,11 @@ def write_flac_tags(artist, album):
         flac_tagger['album'] = album
         flac_tagger.save()
 
-def main(artist, album):
-    rip_to_wav()
+def main(artist, album, rip_speed=None):
+    if rip_speed == None:
+        rip_to_wav()
+    else:
+        rip_to_wav(speed=rip_speed)
     for wav_file in glob.glob(r'*.wav'):
         output_file_base = os.path.splitext(wav_file)[0]
         rip_to_flac(wav_file, output_file_base + ".flac")
@@ -60,9 +66,11 @@ def main(artist, album):
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-      print "Usage:\n  cd_rip.py <artist> <album>"
-      sys.exit(1)
-
-    main(sys.argv[1], sys.argv[2])
+        print "Usage:\n  cd_rip.py <artist> <album> [rip speed]"
+        sys.exit(1)
+    if len(sys.argv > 3):
+        main(sys.argv[1], sys.argv[2], rip_speed=int(sys.argv[3]))
+    else:
+        main(sys.argv[1], sys.argv[2])
 
 
