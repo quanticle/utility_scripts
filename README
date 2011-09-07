@@ -1,2 +1,28 @@
 This is a collection of utility scripts that I use for system administration and
 miscellaneous tasks
+
+
+cd_rip.py
+  This is a cd-ripping/encoding script. The motivation is because 1) CDDB
+  entries for my music are often wrong and 2) I don't organize by track; I
+  organize by artist and album. So the MP3 tagging utilites that do everything
+  for me are way overkill. I just want to punch in the artist and album names
+  and have the (properly tagged) MP3 and FLAC files dumped into the current
+  directory so I can organize them however I wish.
+
+  A secondary motivation is that there are a few disks that can only be properly
+  ripped at low speeds. High speed reading causes skips and jitter beyond even
+  CDParanoia's ability to fix. So the script includes an optional speed argument
+  that allows you to throttle down the CD drive as necessary to achieve a clean
+  read.
+
+  Prerequisites:
+    - cdparanoia (basic CD-ripping & error correction)
+    - flac - lossless encoding
+    - lame - MP3 encoding
+    - mutagen - tag writing
+
+  Usage: cd_rip.py <artist> <album> [optional read speed]
+
+  This will probably be never ported to Windows, as CDParanoia is deeply
+  entwined with Linux's CD/DVD drivers.
