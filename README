@@ -26,3 +26,7 @@ cd_rip.py
 
   This will probably be never ported to Windows, as CDParanoia is deeply
   entwined with Linux's CD/DVD drivers.
+
+gapless_playback.sh
+  This simple (4-lines!) shell script pipes mplayer into aplay using a FIFO and
+  a 2-sec buffer, creating a simple gapless FLAC player.
