@@ -13,7 +13,7 @@ def rip_to_wav(speed=None):
     if speed == None:
         subprocess.check_call(['cdparanoia', '-B'])
     else:
-        subprocess.check_call(['cdparanoia', '-B', '-S', str(rip_speed)])
+        subprocess.check_call(['cdparanoia', '-B', '-S', str(speed)])
 
 def rip_to_flac(input_file_name, output_file_name):
     """Uses subprocess to call FLAC to convert the input file (presumably a wav
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 3:
         print "Usage:\n  cd_rip.py <artist> <album> [rip speed]"
         sys.exit(1)
-    if len(sys.argv > 3):
+    if len(sys.argv) > 3:
         main(sys.argv[1], sys.argv[2], rip_speed=int(sys.argv[3]))
     else:
         main(sys.argv[1], sys.argv[2])
